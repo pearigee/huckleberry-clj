@@ -1,6 +1,6 @@
 (ns huckleberry.env-test
   (:require [clojure.test :as t :refer [deftest is testing]]
-            [huckleberry.env  :refer [def-var set-var get-var]]
+            [huckleberry.env  :refer [def-var set-var get-var extend-env]]
             [huckleberry.error :refer [error?]]))
 
 (deftest env-test
@@ -16,4 +16,7 @@
   (testing "set-var sets values only if they exist"
     (is (= (error? (set-var [] :x 3)) true)) ;; Should throw error
     (is (= (set-var [{:x 2} {:x 3}] :x 5) [{:x 2} {:x 5}]))
-    (is (= (set-var [{:x 2} {}] :x 5) [{:x 5} {}]))))
+    (is (= (set-var [{:x 2} {}] :x 5) [{:x 5} {}])))
+
+  (testing "extend should create a new scope"
+    (is (= (extend-env [{:x 3}]) [{:x 3} {}]))))

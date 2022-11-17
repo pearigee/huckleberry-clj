@@ -31,3 +31,6 @@
 
 (defn get-var [env key]
   (walk-env-for-key env key (fn [v _] v)))
+
+(defn extend-env [env]
+  (conj env {}))
